@@ -14,6 +14,10 @@
                 width: 30%;
             }
 
+            #icon {
+                margin: auto;
+            }
+
             .card {
                 border: 3px solid grey;
                 border-radius: 15px;
@@ -32,11 +36,18 @@
             </div>
             <div id="spacer"/>
             <div class="row">
-                <div class="card"> 
+                <div class="card egg">
+                    <div class="card-body">
+                        <img id="icon" src="https://www.shareicon.net/download/2016/01/03/697342_plus_512x512.png" />
+                    </div>
+                </div>
+                <div class="card chicken"> 
                     <div class="card-body">
                         <h5 class="card-title"> {{ name }} </h5>
                         <p class="card-text"> left the toilet seat up {{ num_times }} times.</p>
-                        <a href="#" class="btn btn-primary">Report</a>
+                        <form action="/report" method="post">
+                            <button method="post" name="report" value="report" class="btn btn-primary">Report</a>
+                        </form>
                     </div>
                 </div>
             </div>
