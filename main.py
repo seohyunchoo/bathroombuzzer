@@ -11,9 +11,9 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
 )
 
-class Person(ndb.Model):
+class Badguy(ndb.Model):
     name = ndb.StringProperty
-    num_times = ndb.IntegerProperty
+    number = ndb.IntegerProperty
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -31,7 +31,14 @@ class Reportbook(webapp2.RequestHandler):
         print 'Report was received'
         self.redirect('/')
 
+class AddNewPerson(webapp2.RequestHandler):
+    def post(self):
+        new_person = Badguy( name = self.request.get('name'), number = 1 )
+        new_person.put()
+        self.redirect('/')
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/report', Reportbook),
+    ('/addperson', AddNewPerson),
 ], debug=True)
