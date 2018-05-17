@@ -16,42 +16,46 @@
             }
 
             .card {
+                padding: 10px;
                 border: 3px solid grey;
                 border-radius: 15px;
+            }
+
+            #spacer {
+                height: 30px;
             }
         </style>
     </head>
     <body>
+        <div class="row">
+            <div class="col-sm-4"> 
+                <img src="https://i.pinimg.com/originals/71/43/4f/71434f79f883930ded6927b8138046c7.png"/>
+            </div>
+            <div class="col-sm-8"> 
+                <h1> Bathroom Buzzer Dashboard </h1>
+            </div>
+        </div>
+        <div id="spacer"/>
         <div class = "container">
-            <div class="row">
-                <div class="col-sm-4"> 
-                    <img src="https://i.pinimg.com/originals/71/43/4f/71434f79f883930ded6927b8138046c7.png"/>
-                </div>
-                <div class="col-sm-8"> 
-                    <h1> Bathroom Buzzer Dashboard </h1>
-                </div>
-            </div>
-            <div id="spacer"/>
-         
-            <div class="row">
-                <div class="card egg">
-                    <div class="card-body">
-                        <form action="/addperson" method="post">
-                            <input type="text" id="name" placeholder="What is his name?">
-                            <input type="submit" value="ADD A BAD GUY">
-                        </form>
-                    </div>
-                </div>
-                <div class="card chicken"> 
-                    <div class="card-body">
-                        <h5 class="card-title"> {{ name }} </h5>
-                        <p class="card-text"> left the toilet seat up {{ num_times }} times.</p>
-                        <form action="/report" method="post">
-                            <button method="post" name="report" value="report" class="btn btn-primary">Report</a>
-                        </form>
-                    </div>
+            <div class="card egg">
+                <div class="card-body">
+                    <form action="/addperson" method="post">
+                        <input name="name" type="text" id="name" placeholder="What is his name?">
+                        <input type="submit" value="ADD A BAD GUY">
+                    </form>
                 </div>
             </div>
+            {% for badguy in badguy_list %}    
+            <div class="card chicken"> 
+                <div class="card-body">
+                    <h5 class="card-title"> {{ badguy.name }} </h5>
+                    <p class="card-text"> left the toilet seat up {{ badguy.number }} times.</p>
+                    <form action="/report?badguy_name={{ badguy.name }}" method="post">
+                        <button method="post" name="report" value="report" class="btn btn-primary">Report</a>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
             
         </div>
     </body>

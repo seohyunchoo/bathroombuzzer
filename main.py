@@ -12,23 +12,28 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 )
 
 class Badguy(ndb.Model):
-    name = ndb.StringProperty
-    number = ndb.IntegerProperty
+    name = ndb.StringProperty()
+    number = ndb.IntegerProperty()
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        number = 3
+        badguy_query = Badguy.query()
+
         template_values = {
-            'name': "Roberto",
-            'num_times': number,
+            'badguy_list': badguy_query.fetch(),
         }
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(template_values))
 
-class Reportbook(webapp2.RequestHandler):
+class Report(webapp2.RequestHandler):
     def post(self):
         print 'Report was received'
+        print self.request.GET["badguy_name"]
+        badguy_query = Badguy.query(Badguy.name == self.request.GET['badguy_name'])
+        badguy = badguy_query.fetch()[0]
+        badguy.number += 1
+        badguy.put()
         self.redirect('/')
 
 class AddNewPerson(webapp2.RequestHandler):
@@ -39,6 +44,6 @@ class AddNewPerson(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/report', Reportbook),
+    ('/report', Report),
     ('/addperson', AddNewPerson),
 ], debug=True)
